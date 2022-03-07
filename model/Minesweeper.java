@@ -5,7 +5,7 @@ public class Minesweeper extends AbstractMineSweeper{
     @Override
     public int getWidth() {
 
-
+    return 0;
     }
 
     @Override
