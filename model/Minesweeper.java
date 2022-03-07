@@ -1,11 +1,16 @@
 package model;
 
+import static model.Difficulty.EASY;
+import static model.Difficulty.MEDIUM;
+
 public class Minesweeper extends AbstractMineSweeper{
+    int mines;
+    int wBords;
+    int hBords;
 
     @Override
     public int getWidth() {
-
-    return 0;
+        return 0;
     }
 
     @Override
