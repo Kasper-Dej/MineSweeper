@@ -59,6 +59,14 @@ public class Minesweeper extends AbstractMineSweeper{
             this.row = 8;
         }
 
+
+        AbstractTile[][] t = new AbstractTile[col][row];
+        for(int i = 0; i < col; i++){
+            for(int j = 0; j < row; j++){
+                t[i][j] = generateEmptyTile();
+            }
+        }
+
     }
     @Override
     public void toggleFlag(int x, int y) {
@@ -97,11 +105,11 @@ public class Minesweeper extends AbstractMineSweeper{
 
     @Override
     public AbstractTile generateEmptyTile() {
-        return null;
+        return new Tile(false, false, false);
     }
 
     @Override
     public AbstractTile generateExplosiveTile() {
-        return null;
+        return new Tile(true, false, true);
     }
 }
