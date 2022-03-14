@@ -23,7 +23,19 @@ public class Minesweeper extends AbstractMineSweeper{
 
     @Override
     public void startNewGame(Difficulty level) {
-        setDifficulty(level);
+        this.level = level;
+
+        switch (level) {
+            case EASY :
+                startNewGame(8, 8, 10);
+                break;
+            case MEDIUM:
+                startNewGame(16,16,40);
+                break;
+            case HARD:
+                startNewGame(16,30,99);
+                break;
+        }
     }
 
     @Override
@@ -31,38 +43,9 @@ public class Minesweeper extends AbstractMineSweeper{
             this.row = row;
             this.col = col;
             this.explosionCount = explosionCount;
-    }
+            tilelist = new AbstractTile[row][col];
 
-    public void setDifficulty(Difficulty level)
-    {
-        this.level = level;
-        if(this.level== EASY  )
-        {
-            this.explosionCount = 10;
-            this.col = 8;
-            this.row = 8;
-
-        }
-        else if(this.level== MEDIUM)
-        {
-            this.explosionCount = 40;
-            this.col = 16;
-            this.row = 16;
-        }
-        else if(this.level== HARD)
-        {
-            this.explosionCount = 40;
-            this.col = 16;
-            this.row = 30;
-        }
-        else
-        {
-            this.level = EASY;
-            this.explosionCount = 10;
-            this.col = 8;
-            this.row = 8;
-        }
-
+            this.explosionCount = explosionCount;
 
         tilelist = new AbstractTile[col][row];
         for(int i = 0; i < col; i++){
@@ -70,7 +53,6 @@ public class Minesweeper extends AbstractMineSweeper{
                 tilelist[i][j] = generateEmptyTile();
             }
         }
-
         Random r = new Random();
         for(int k = 0; k < explosionCount; k++){
             int xPos = r.nextInt(getWidth()-1);
@@ -78,8 +60,8 @@ public class Minesweeper extends AbstractMineSweeper{
             tilelist[xPos][yPos] = generateExplosiveTile();
         }
 
-
     }
+
     @Override
     public void toggleFlag(int x, int y) {
 
