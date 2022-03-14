@@ -1,11 +1,13 @@
 package model;
 
+import java.util.Random;
 import static model.Difficulty.*;
 
 public class Minesweeper extends AbstractMineSweeper{
     int explosionCount;
     int col;
     int row;
+    private AbstractTile[][] tilelist;
     Difficulty level;
 
 
@@ -21,12 +23,14 @@ public class Minesweeper extends AbstractMineSweeper{
 
     @Override
     public void startNewGame(Difficulty level) {
-    setDifficulty(level);
+        setDifficulty(level);
     }
 
     @Override
     public void startNewGame(int row, int col, int explosionCount) {
-    setDifficulty(this.level);
+            this.row = row;
+            this.col = col;
+            this.explosionCount = explosionCount;
     }
 
     public void setDifficulty(Difficulty level)
@@ -60,12 +64,20 @@ public class Minesweeper extends AbstractMineSweeper{
         }
 
 
-        AbstractTile[][] t = new AbstractTile[col][row];
+        tilelist = new AbstractTile[col][row];
         for(int i = 0; i < col; i++){
             for(int j = 0; j < row; j++){
-                t[i][j] = generateEmptyTile();
+                tilelist[i][j] = generateEmptyTile();
             }
         }
+
+        Random r = new Random();
+        for(int k = 0; k < explosionCount; k++){
+            int xPos = r.nextInt(getWidth()-1);
+            int yPos = r.nextInt(getHeight()-1);
+            tilelist[xPos][yPos] = generateExplosiveTile();
+        }
+
 
     }
     @Override
@@ -80,7 +92,7 @@ public class Minesweeper extends AbstractMineSweeper{
 
     @Override
     public void setWorld(AbstractTile[][] world) {
-
+        tilelist = world;
     }
 
     @Override
