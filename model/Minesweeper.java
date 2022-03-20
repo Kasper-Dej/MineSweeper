@@ -9,7 +9,9 @@ public class Minesweeper extends AbstractMineSweeper{
     int row;
     private AbstractTile[][] tilelist;
     Difficulty level;
-
+    private AbstractTile[][] screenTile[][];
+    private int amountOfTilesExposed;
+    private int positions;
 
     @Override
     public int getWidth() {
@@ -84,12 +86,18 @@ public class Minesweeper extends AbstractMineSweeper{
 
     @Override
     public void flag(int x, int y) {
-
+        if(!tilelist[x][y].isFlagged()){
+            tilelist[x][y].flag();
+            explosionCount--;
+        }
     }
 
     @Override
     public void unflag(int x, int y) {
-
+        if(tilelist[x][y].isFlagged()){
+            tilelist[x][y].unflag();
+            explosionCount++;
+        }
     }
 
     @Override
@@ -106,4 +114,20 @@ public class Minesweeper extends AbstractMineSweeper{
     public AbstractTile generateExplosiveTile() {
         return new Tile(true, false, true);
     }
+
+    public int getBombsAroundTile(int x, int y) {
+        int count = 0;
+        for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                int xPos = x + i;
+                int yPos = y + j;
+                if (0 <= xPos && xPos < getWidth() && 0 <= yPos && yPos< getHeight())
+                    if (tilelist[xPos][yPos] == generateExplosiveTile()) {
+                        count++;
+                    }
+            }
+        }
+        return count;
+    }
+
 }

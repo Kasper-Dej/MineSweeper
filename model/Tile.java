@@ -13,6 +13,7 @@ public class Tile extends AbstractTile{
         this.explosive = explosive;
     }
 
+
     @Override
     public boolean open() {
         return open;
@@ -20,12 +21,12 @@ public class Tile extends AbstractTile{
 
     @Override
     public void flag() {
-
+        flag = true;
     }
 
     @Override
     public void unflag() {
-
+        flag = false;
     }
 
     @Override
