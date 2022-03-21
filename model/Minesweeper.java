@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Random;
 import static model.Difficulty.*;
 
@@ -45,10 +46,9 @@ public class Minesweeper extends AbstractMineSweeper{
             this.row = row;
             this.col = col;
             this.explosionCount = explosionCount;
-            tilelist = new AbstractTile[row][col];
 
 
-        tilelist = new AbstractTile[row][col];
+        this.tilelist = new AbstractTile[row][col];
         for(int i = 0; i < row; i++){
             for(int j = 0; j < col; j++){
                 tilelist[i][j] = generateEmptyTile();
@@ -88,6 +88,8 @@ public class Minesweeper extends AbstractMineSweeper{
     @Override
     public void setWorld(AbstractTile[][] world) {
         tilelist = world;
+        row= world.length;
+        col= world[0].length;
     }
 
     @Override
