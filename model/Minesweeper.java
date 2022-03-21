@@ -11,6 +11,8 @@ public class Minesweeper extends AbstractMineSweeper{
     Difficulty level;
     private int timesClicked;
 
+
+
     @Override
     public int getWidth() {
         return col;
