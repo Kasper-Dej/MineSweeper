@@ -10,8 +10,8 @@ public class Minesweeper extends AbstractMineSweeper{
     int row;
     private AbstractTile[][] tilelist;
     Difficulty level;
-    private int timesClicked;
-
+    private int timesClicked = 0;
+    private String push ="testpush";
 
 
     @Override
@@ -47,7 +47,7 @@ public class Minesweeper extends AbstractMineSweeper{
             this.col = col;
             this.explosionCount = explosionCount;
 
-
+        viewNotifier.notifyNewGame(row, col);
         this.tilelist = new AbstractTile[row][col];
         for(int i = 0; i < row; i++){
             for(int j = 0; j < col; j++){
@@ -67,6 +67,7 @@ public class Minesweeper extends AbstractMineSweeper{
     public void toggleFlag(int x, int y) {
             if( tilelist[y][x].isFlagged()) {
                 tilelist[y][x].unflag();
+
             }
             else{
                 tilelist[y][x].flag();
@@ -95,7 +96,7 @@ public class Minesweeper extends AbstractMineSweeper{
     @Override
     public void open(int x, int y) {
         if(timesClicked == 0){
-            deactivateFirstTileRule();
+
         }
         if (0 <= x && x < getWidth() && 0 <= y && y < getHeight()) {
             if (!tilelist[y][x].isExplosive() && !tilelist[y][x].isFlagged() && !tilelist[y][x].isOpened()) {
@@ -107,6 +108,7 @@ public class Minesweeper extends AbstractMineSweeper{
                         if (0 <= xPos && xPos < getWidth() && 0 <= yPos && yPos < getHeight()) {
                             if (!tilelist[yPos][xPos].isExplosive()) {
                                 tilelist[yPos][xPos].open();
+                                viewNotifier.notifyOpened(x, y, getBombsAroundTile(x,y));
                             }
                         }
                     }
@@ -115,6 +117,7 @@ public class Minesweeper extends AbstractMineSweeper{
                 for (int i = 0; i < getWidth(); i++) {
                     for (int j = 0; j < getHeight(); j++) {
                         tilelist[j][i].open();
+                        viewNotifier.notifyExploded(x,y);
                     }
                 }
             }
@@ -123,16 +126,18 @@ public class Minesweeper extends AbstractMineSweeper{
 
     @Override
     public void flag(int x, int y) {
-        if(!tilelist[y][x].isFlagged()){
+        if(!tilelist[y][x].isFlagged() && !tilelist[y][x].open() ){
             tilelist[y][x].flag();
+            viewNotifier.notifyFlagged(x,y);
             explosionCount--;
         }
     }
 
     @Override
     public void unflag(int x, int y) {
-        if(tilelist[y][x].isFlagged()){
+        if(tilelist[y][x].isFlagged()  && !tilelist[y][x].open() ){
             tilelist[y][x].unflag();
+            viewNotifier.notifyFlagged(x,y);
             explosionCount++;
         }
     }
