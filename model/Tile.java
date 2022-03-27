@@ -7,16 +7,17 @@ public class Tile extends AbstractTile{
     private boolean flag;
     private boolean explosive;
 
-    public Tile(boolean open, boolean flag, boolean explosive) {
-        this.open = open;
-        this.flag = flag;
+    public Tile(boolean explosive) {
+        this.open = false;
+        this.flag = false;
         this.explosive = explosive;
     }
 
 
     @Override
     public boolean open() {
-        return open;
+        this.open = true;
+        return explosive;
     }
 
     @Override

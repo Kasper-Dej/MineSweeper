@@ -13,10 +13,12 @@ public class App {
         /**
             Your code to bind your game model to the game user interface
         */
-        
-        model.setGameStateNotifier(view);
-        model.startNewGame(Difficulty.EASY);
 
+        model.startNewGame(Difficulty.EASY);
+        model.setGameStateNotifier(view);
+
+        //
+        //
         //view.notifyNewGame(model.getHeight(),model.getHeight());
 
     }
